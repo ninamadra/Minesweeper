@@ -1,5 +1,8 @@
 package com.example.minesweeper
 
-class Game(size: Int) {
-     val grid: MineGrid = MineGrid(size)
+class Game(var size: Int, var numberOfBombs: Int) {
+     public val grid: MineGrid = MineGrid(size)
+     init {
+          grid.generateGrid(numberOfBombs)
+     }
 }
