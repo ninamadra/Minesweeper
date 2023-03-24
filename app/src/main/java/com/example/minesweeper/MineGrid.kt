@@ -1,6 +1,5 @@
 package com.example.minesweeper
 
-import android.util.Log
 import kotlin.random.Random
 
 class MineGrid(private val size: Int) {
@@ -41,11 +40,11 @@ class MineGrid(private val size: Int) {
         }
     }
 
-    fun toIndex(x: Int, y:Int): Int {
+    private fun toIndex(x: Int, y:Int): Int {
         return x + y * size
     }
 
-    fun tileAt(x: Int, y: Int): Tile? {
+    private fun tileAt(x: Int, y: Int): Tile? {
         if(x < 0 || x >= size || y < 0 || y >= size) {
             return null
         }
@@ -62,7 +61,7 @@ class MineGrid(private val size: Int) {
         arrayList.add(tileAt(x-1,y+1))
         arrayList.add(tileAt(x,y+1))
         arrayList.add(tileAt(x+1,y+1))
-        return arrayList.filterNotNull().toCollection(ArrayList<Tile>())
+        return arrayList.filterNotNull().toCollection(ArrayList())
 
     }
 
@@ -70,5 +69,13 @@ class MineGrid(private val size: Int) {
         val y = index / size
         val x = index - y * size
         return  intArrayOf(x,y).toCollection(ArrayList())
+    }
+
+    fun revealBombs() {
+        for (tile in tiles) {
+            if (tile.state == State.BOMB) {
+                tile.isRevealed = true
+            }
+        }
     }
 }

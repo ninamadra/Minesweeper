@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Minesweeper</string>
     <string name="flag">🚩</string>
-    <string name="smile">😃</string>
+    <string name="smile">😎</string>
+    <string name="gameOver">😵</string>
     <string name="defaultCount">000</string>
     <string name="bomb">💣</string>
+    <string name="gameWon">🥳</string>
 </resources>
