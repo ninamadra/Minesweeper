@@ -34,13 +34,17 @@ class MineGridRecyclerAdapter(private var tiles: ArrayList<Tile>, var listener: 
         private val textView: TextView = itemView.findViewById(R.id.tile_val)
 
         fun bind(tile: Tile) {
-            itemView.setBackgroundColor(Color.LTGRAY)
+            itemView.setBackgroundColor(Color.GRAY)
             textView.setTypeface(null, Typeface.BOLD)
+            itemView.setOnLongClickListener {
+                listener.onTileLongClick(tile)
+                true
+            }
             itemView.setOnClickListener {
                 listener.onTileClick(tile)
             }
             if (tile.isRevealed) {
-                itemView.setBackgroundColor(Color.GRAY)
+                itemView.setBackgroundColor(Color.rgb(110,110,110))
                 when (tile.state) {
                     State.BOMB -> {
                         textView.setText(R.string.bomb)
@@ -51,14 +55,14 @@ class MineGridRecyclerAdapter(private var tiles: ArrayList<Tile>, var listener: 
                     else -> {
                         textView.text = tile.value.toString()
                         when (tile.value) {
-                            1 -> textView.setTextColor(Color.CYAN)
-                            2 -> textView.setTextColor(Color.GREEN)
+                            1 -> textView.setTextColor(Color.rgb(55,0,180))
+                            2 -> textView.setTextColor(Color.rgb(20,200,20))
                             3 -> textView.setTextColor(Color.RED)
-                            4 -> textView.setTextColor(Color.BLUE)
+                            4 -> textView.setTextColor(Color.rgb(120,30,160))
                             5 -> textView.setTextColor(Color.MAGENTA)
                             6 -> textView.setTextColor(Color.BLACK)
                             7 -> textView.setTextColor(Color.YELLOW)
-                            8 -> textView.setTextColor(Color.BLACK)
+                            8 -> textView.setTextColor(Color.CYAN)
 
                         }
                     }

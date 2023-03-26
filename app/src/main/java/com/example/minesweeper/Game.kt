@@ -2,8 +2,6 @@ package com.example.minesweeper
 
 class Game(var size: Int, var numberOfBombs: Int) {
     val grid: MineGrid = MineGrid(size)
-    private var clearMode = true
-    private var flagMode = false
     var isGameOver = false
     private var timeExpired = false
     var flagCount = 0
@@ -13,13 +11,8 @@ class Game(var size: Int, var numberOfBombs: Int) {
     }
 
     fun onTileClicked(tile: Tile) {
-        if (!isGameOver && !isGameWon() &&!timeExpired) {
-            if(clearMode) {
+        if (!isGameOver && !isGameWon() &&!timeExpired && !tile.isFlagged) {
                 clear(tile)
-            }
-        }
-        if (flagMode) {
-            flag(tile)
         }
     }
 
@@ -81,8 +74,7 @@ class Game(var size: Int, var numberOfBombs: Int) {
         timeExpired = true
     }
 
-    private fun flag(tile: Tile) {
-        println("flagging")
+    fun flag(tile: Tile) {
         if (!tile.isRevealed) {
             tile.isFlagged = !tile.isFlagged
             var count = 0
@@ -95,8 +87,10 @@ class Game(var size: Int, var numberOfBombs: Int) {
         }
     }
 
-    fun changeMode() {
-        clearMode = !clearMode
-        flagMode = !flagMode
+    fun onTileLongClick(tile: Tile) {
+        if (!isGameOver && !isGameWon() &&!timeExpired) {
+            flag(tile)
+        }
     }
+
 }

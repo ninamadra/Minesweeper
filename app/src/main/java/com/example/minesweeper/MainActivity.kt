@@ -13,7 +13,6 @@ class MainActivity : AppCompatActivity(), OnTileClicked {
     private lateinit var mineGridRecyclerAdapter: MineGridRecyclerAdapter
     private lateinit var game: Game
     private lateinit var smile: TextView
-    private lateinit var flag: TextView
     private lateinit var flagCount: TextView
     private lateinit var timer: TextView
     private lateinit var countDownTimer: CountDownTimer
@@ -23,6 +22,7 @@ class MainActivity : AppCompatActivity(), OnTileClicked {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        supportActionBar?.hide()
 
         smile = findViewById(R.id.smile)
         smile.setOnClickListener {
@@ -59,17 +59,20 @@ class MainActivity : AppCompatActivity(), OnTileClicked {
         mineGridRecyclerAdapter = MineGridRecyclerAdapter(game.grid.tiles, this)
         gridRecyclerView.adapter = mineGridRecyclerAdapter
 
-        flag = findViewById(R.id.flag)
         flagCount = findViewById(R.id.flagsLeft)
         flagCount.text = String.format("%03d", game.numberOfBombs - game.flagCount)
-        flag.setOnClickListener {
-            game.changeMode()
-        }
     }
 
     override fun onTileClick(tile: Tile) {
         game.onTileClicked(tile)
-        flagCount.text = String.format("%03d", game.numberOfBombs - game.flagCount)
+        update()
+    }
+
+    override fun onTileLongClick(tile: Tile) {
+        game.onTileLongClick(tile)
+        update()
+    }
+    private fun update() {
         if (!timerStarted) {
             countDownTimer.start()
             timerStarted = true
